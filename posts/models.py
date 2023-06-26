@@ -14,10 +14,18 @@ class Category(models.Model):
         return self.name
 
 
+class Author(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
     excerpt = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='post_photos')
     text = models.TextField(max_length=5000, blank=True)
