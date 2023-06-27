@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, TemplateView
-from .models import Post
+from django.views.generic import ListView
+from .models import Post, Category
 
 
 class Home(ListView):
@@ -13,4 +13,5 @@ class Home(ListView):
         context['title'] = 'Travelling blog - Home'
         context['latest_posts'] = Post.objects.all().order_by('-created_at')[:3]
         context['posts'] = Post.objects.all().order_by('-created_at')[3:]
+        context['categories'] = Category.objects.all()
         return context
