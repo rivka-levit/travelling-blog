@@ -28,6 +28,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
     excerpt = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='post_photos')
+    time_read = models.IntegerField(blank=True, null=True)
     text = models.TextField(max_length=5000, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
