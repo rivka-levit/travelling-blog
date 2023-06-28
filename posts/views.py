@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Post, Category
+from .models import Post, Category, Author
 
 
 class Home(ListView):
@@ -14,4 +14,5 @@ class Home(ListView):
         context['latest_posts'] = Post.objects.all().order_by('-created_at')[:3]
         context['posts'] = Post.objects.all().order_by('-created_at')[3:]
         context['categories'] = Category.objects.all()
+        context['blog_author'] = Author.objects.get(pk=1)
         return context

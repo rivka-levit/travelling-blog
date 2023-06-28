@@ -1,4 +1,5 @@
 {% extends 'posts/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -9,11 +10,11 @@
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="category-item">
                     <div class="category-img">
-                        <a href="blog-single.html"><img src="{{ post.image.url }}" alt="" class="img-fluid w-100"></a>
+                        <a href="#"><img src="{{ post.image.url }}" alt="" class="img-fluid w-100"></a>
                     </div>
                     <div class="content">
                         <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">{{ post.category|upper }}</a>
-                        <h4><a href="blog-single.html">{{ post.title|title }}</a></h4>
+                        <h4><a href="#">{{ post.title|title }}</a></h4>
                     </div>
                 </div>
             </div>
@@ -93,13 +94,13 @@
 						<div class="sidebar-wrap mt-5 mt-lg-0">
 							<div class="sidebar-widget about mb-5 text-center p-3">
 								<div class="about-author">
-									<img src="images/author.jpg" alt="" class="img-fluid">
+									<img src="{{ blog_author.photo.url }}" alt="" class="img-fluid">
 								</div>
-								<h4 class="mb-0 mt-4">Liam Mason</h4>
+								<h4 class="mb-0 mt-4">{{ blog_author.name }}</h4>
 								<p>Travel Blogger</p>
 								<p>I'm Liam, last year I decided to quit my job and travel the world. You can follow my journey on this
 									blog!</p>
-								<img src="images/liammason.png" alt="" class="img-fluid">
+								<img src="{% static 'images/liammason.png' %}" alt="" class="img-fluid">
 							</div>
 
 							<div class="sidebar-widget follow mb-5 text-center">
@@ -112,35 +113,6 @@
 									<a href="#"><i class="ti-pinterest"></i></a>
 								</div>
 							</div>
-
-							<div class="sidebar-widget mb-5 ">
-								<h4 class="text-center widget-title">Trending Posts</h4>
-
-								<div class="sidebar-post-item-big">
-									<a href="blog-single.html"><img src="images/news/img-1.jpg" alt="" class="img-fluid"></a>
-									<div class="mt-3 media-body">
-										<span class="text-muted letter-spacing text-uppercase font-sm">September 10, 2019</span>
-										<h4><a href="blog-single.html">Meeting With Clarissa, Founder Of Purple Conversation App</a></h4>
-									</div>
-								</div>
-
-								<div class="media border-bottom py-3 sidebar-post-item">
-									<a href="#"><img class="mr-4" src="images/news/thumb-1.jpg" alt=""></a>
-									<div class="media-body">
-										<span class="text-muted letter-spacing text-uppercase font-sm">September 10, 2019</span>
-										<h4><a href="blog-single.html">Thoughtful living in los Angeles</a></h4>
-									</div>
-								</div>
-
-								<div class="media py-3 sidebar-post-item">
-									<a href="#"><img class="mr-4" src="images/news/thumb-2.jpg" alt=""></a>
-									<div class="media-body">
-										<span class="text-muted letter-spacing text-uppercase font-sm">September 10, 2019</span>
-										<h4><a href="blog-single.html">Vivamus molestie gravida turpis.</a></h4>
-									</div>
-								</div>
-							</div>
-
 
 							<div class="sidebar-widget category mb-5">
 								<h4 class="text-center widget-title">Catgeories</h4>
