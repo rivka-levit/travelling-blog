@@ -10,7 +10,6 @@ class Home(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(Home, self).get_context_data(**kwargs)
-        context['title'] = 'Travelling blog - Home'
         context['latest_posts'] = Post.objects.all().order_by('-created_at')[:3]
         context['posts'] = Post.objects.all().order_by('-created_at')[3:]
         context['categories'] = Category.objects.all()
