@@ -10,11 +10,11 @@
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="category-item">
                     <div class="category-img">
-                        <a href="#"><img src="{{ post.image.url }}" alt="" class="img-fluid w-100"></a>
+                        <a href="{% url 'post_detail' post.slug %}"><img src="{{ post.image.url }}" alt="" class="img-fluid w-100"></a>
                     </div>
                     <div class="content">
                         <a href="#" class="text-color text-uppercase font-sm letter-spacing font-extra">{{ post.category|upper }}</a>
-                        <h4><a href="#">{{ post.title|title }}</a></h4>
+                        <h4><a href="{% url 'post_detail' post.slug %}">{{ post.title|title }}</a></h4>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
 					<div class="mb-4 post-list border-bottom pb-4">
 						<div class="row no-gutters">
 							<div class="col-md-5">
-								<a class="post-thumb " href="#">
+								<a class="post-thumb " href="{% url 'post_detail' post.slug %}">
 									<img src="{{ post.image.url }}" alt="" class="img-fluid w-100">
 								</a>
 							</div>
@@ -61,7 +61,7 @@
 									<div class="meta-cat">
 										<span class="letter-spacing cat-name font-extra text-uppercase font-sm">{{ post.category|upper }}</span>
 									</div>
-									<h3 class="post-title mt-2"><a href="#">{{ post.title|title }}</a></h3>
+									<h3 class="post-title mt-2"><a href="{% url 'post_detail' post.slug %}">{{ post.title|title }}</a></h3>
 
 									<div class="post-meta">
 										<ul class="list-inline">

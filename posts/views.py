@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from .models import Post, Category, Author
 
 
@@ -16,3 +16,11 @@ class Home(ListView):
         context['categories'] = Category.objects.all()
         context['blog_author'] = Author.objects.get(pk=1)
         return context
+
+
+class PostDetailView(View):
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+        return render(request, 'posts/post_detail.html', {
+            'post': post
+        })
