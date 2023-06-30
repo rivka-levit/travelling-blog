@@ -13,6 +13,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def count_posts(self):
+        return self.posts.count()
+
 
 class Author(models.Model):
     name = models.CharField(max_length=50)
