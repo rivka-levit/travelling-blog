@@ -18,7 +18,7 @@
 
                         <div class="post-meta">
                             <span class="text-uppercase font-sm letter-spacing-1 mr-3">by {{ post.author }}</span>
-                            <span class="text-uppercase font-sm letter-spacing-1">{{ post.updated_at }}</span>
+                            <span class="text-uppercase font-sm letter-spacing-1">{{ post.updated_at|date }}</span>
                         </div>
                         <div class="post-featured-image mt-5">
                             <img src="{{ post.image.url }}" class="img-fluid w-100" alt="featured-image">
