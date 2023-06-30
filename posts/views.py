@@ -12,7 +12,6 @@ class Home(ListView):
         context = super(Home, self).get_context_data(**kwargs)
         context['latest_posts'] = Post.objects.all().order_by('-created_at')[:3]
         context['posts'] = Post.objects.all().order_by('-created_at')[3:]
-        context['categories'] = Category.objects.all()
         context['blog_author'] = Author.objects.get(pk=1)
         return context
 
