@@ -79,15 +79,24 @@
 						</div>
 					</div>
                 {% endfor %}
-
+                {% if is_paginated %}
 					<div class="pagination mt-5 pt-4">
 						<ul class="list-inline">
-							<li class="list-inline-item"><a href="#" class="active">1</a></li>
-							<li class="list-inline-item"><a href="#">2</a></li>
-							<li class="list-inline-item"><a href="#">3</a></li>
-							<li class="list-inline-item"><a href="#" class="prev-posts"><i class="ti-arrow-right"></i></a></li>
+                            {% for page in paginator.page_range %}
+							<li class="list-inline-item">
+                                <a href="?page={{ page }}" {% if page == page_obj.number %} class="active" {% endif %}>{{ page }}</a>
+                            </li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+							<li class="list-inline-item">
+                                <a href="?page={{ page_obj.next_page_number }}" class="prev-posts">
+                                    <i class="ti-arrow-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
 						</ul>
 					</div>
+                {% endif %}
 				</div>
 				<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
 					<div class="sidebar sidebar-right">
