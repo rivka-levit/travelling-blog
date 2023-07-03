@@ -51,6 +51,9 @@ class CategoryView(ListView):
     model = Post
     template_name = 'posts/category.html'
     context_object_name = 'posts'
+    ordering = ['-created_at']
+    paginate_by = 6
+    paginate_orphans = 1
 
     def get_queryset(self):
         category_slug = self.kwargs['category_slug']
@@ -63,4 +66,3 @@ class CategoryView(ListView):
         category = Category.objects.get(slug=category_slug)
         context['category'] = category
         return context
-
