@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Post
+from mails.models import Subscriber
+from mails.forms import SubscriberForm
 
 
 class HomeView(View):
@@ -18,10 +20,23 @@ class HomeView(View):
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
 
+        form = SubscriberForm()
+
         return render(request, 'posts/home.html', {
             'latest_posts': Post.objects.all().order_by('-created_at')[:3],
-            'posts': page_obj
+            'posts': page_obj,
+            'form': form
         })
+
+    def post(self, request, *args, **kwargs):
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            new_subscriber = Subscriber(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email']
+            )
+            new_subscriber.save()
+        return redirect(request.META['HTTP_REFERER'])
 
 
 class PostDetailView(View):
