@@ -137,7 +137,7 @@
 								<ul class="list-unstyled">
                                     {% for category in categories %}
 									<li class="align-items-center d-flex justify-content-between">
-										<a href="#">{{ category.name }}</a>
+										<a href="{% url 'category' category.slug %}">{{ category.name }}</a>
 										<span>{{ category.count_posts }}</span>
 									</li>
                                     {% endfor %}

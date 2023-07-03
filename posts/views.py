@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import Post
+from .models import Post, Category
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
 
@@ -45,3 +45,22 @@ class PostDetailView(View):
         return render(request, 'posts/post_detail.html', {
             'post': post
         })
+
+
+class CategoryView(ListView):
+    model = Post
+    template_name = 'posts/category.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        category_slug = self.kwargs['category_slug']
+        category = Category.objects.get(slug=category_slug)
+        return super().get_queryset().filter(category=category)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoryView, self).get_context_data()
+        category_slug = self.kwargs['category_slug']
+        category = Category.objects.get(slug=category_slug)
+        context['category'] = category
+        return context
+
