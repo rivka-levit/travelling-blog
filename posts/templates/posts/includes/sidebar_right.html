@@ -1,0 +1,46 @@
+{% load static %}
+
+<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+    <div class="sidebar sidebar-right">
+        <div class="sidebar-wrap mt-5 mt-lg-0">
+            <div class="sidebar-widget about mb-5 text-center p-3">
+                <div class="about-author">
+                    <img src="{{ blog_author.photo.url }}" alt="" class="img-fluid">
+                </div>
+                <h4 class="mb-0 mt-4">{{ blog_author.name }}</h4>
+                <p>Travel Blogger</p>
+                <p>I'm Liam, last year I decided to quit my job and travel the world. You can follow my journey on this
+                    blog!</p>
+                <img src="{% static 'images/liammason.png' %}" alt="" class="img-fluid">
+            </div>
+
+            <div class="sidebar-widget follow mb-5 text-center">
+                <h4 class="text-center widget-title">Follow Me</h4>
+                <div class="follow-socials">
+                    <a href="#"><i class="ti-facebook"></i></a>
+                    <a href="#"><i class="ti-twitter"></i></a>
+                    <a href="#"><i class="ti-instagram"></i></a>
+                    <a href="#"><i class="ti-youtube"></i></a>
+                    <a href="#"><i class="ti-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget category mb-5">
+                <h4 class="text-center widget-title">Catgeories</h4>
+                <ul class="list-unstyled">
+                    {% for category in categories %}
+                    <li class="align-items-center d-flex justify-content-between">
+                        <a href="{% url 'category' category.slug %}">{{ category.name }}</a>
+                        <span>{{ category.count_posts }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="sidebar-widget sidebar-adv mb-5">
+                <a href="#"><img src="{% static 'images/sidebar-banner3.png' %}" alt="" class="img-fluid w-100"></a>
+            </div>
+
+        </div>
+    </div>
+</div>
