@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from .models import Post, Category
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
@@ -61,8 +62,33 @@ class CategoryView(ListView):
         return super().get_queryset().filter(category=category)
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(CategoryView, self).get_context_data()
+        context = super(CategoryView, self).get_context_data(**kwargs)
         category_slug = self.kwargs['category_slug']
         category = Category.objects.get(slug=category_slug)
         context['category'] = category
+        return context
+
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'posts/search-results.html'
+    context_object_name = 'posts'
+    ordering = ['-created_at']
+    paginate_by = 6
+    paginate_orphans = 1
+
+    def get_queryset(self):
+        posts = super(SearchResultsView, self).get_queryset()
+        query = self.request.GET.get('q')
+        if not query:
+            return None
+        return posts.filter(
+            Q(title__icontains=query) |
+            Q(excerpt__icontains=query) |
+            Q(text__icontains=query)
+        )
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q')
         return context

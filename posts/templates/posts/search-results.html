@@ -1,0 +1,86 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="text-center">
+                   <h2 class="lg-title">Search Results</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section-padding">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+            {% for post in posts %}
+                <div class="mb-4 post-list border-bottom pb-4">
+                    <div class="row no-gutters">
+                        <div class="col-md-5">
+                            <a class="post-thumb " href="{% url 'post_detail' post.slug %}">
+                                <img src="{{ post.image.url }}" alt="" class="img-fluid w-100">
+                            </a>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="post-article mt-sm-3">
+                                <div class="meta-cat">
+                                    <span class="letter-spacing cat-name font-extra text-uppercase font-sm">{{ post.category|upper }}</span>
+                                </div>
+                                <h3 class="post-title mt-2"><a href="{% url 'post_detail' post.slug %}">{{ post.title|title }}</a></h3>
+
+                                <div class="post-meta">
+                                    <ul class="list-inline">
+                                        <li class="post-like list-inline-item">
+                                            <span class="font-sm letter-spacing-1 text-uppercase"><i class="ti-time mr-2"></i>{{ post.time_read }} min
+                                                read</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="post-content">
+                                    <p>{{ post.excerpt }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- Pagination block -->
+            {% if is_paginated %}
+                <div class="pagination mt-5 pt-4">
+                    <ul class="list-inline">
+                        {% for page in paginator.page_range %}
+                        <li class="list-inline-item">
+                            <a href="?q={{ query }}&page={{ page }}" {% if page == page_obj.number %} class="active" {% endif %}>{{ page }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="list-inline-item">
+                            <a href="?q={{ query }}&page={{ page_obj.next_page_number }}" class="prev-posts">
+                                <i class="ti-arrow-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+            <!-- End pagination block -->
+        </div>
+
+        <!-- Sidebar right block -->
+        {% include 'posts/includes/sidebar_right.html' %}
+        <!-- End sidebar right block -->
+
+
+    </div>
+</div>
+</section>
+
+{% endblock %}
