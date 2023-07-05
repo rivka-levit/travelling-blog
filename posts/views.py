@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, View
+from django.views.generic import ListView, View, TemplateView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from .models import Post, Category
@@ -92,3 +92,7 @@ class SearchResultsView(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q')
         return context
+
+
+class AboutView(TemplateView):
+    template_name = 'posts/about.html'
