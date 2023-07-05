@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import PostDetailView, HomeView, CategoryView, SearchResultsView
-from .views import AboutView, ContactView
+from .views import PostDetailView, HomeView, CategoryView
+from .views import AboutView, SearchResultsView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -8,5 +8,4 @@ urlpatterns = [
     path('category/<slug:category_slug>/', CategoryView.as_view(), name='category'),
     path('search-results/', SearchResultsView.as_view(), name='search_results'),
     path('about/', AboutView.as_view(), name='about'),
-    path('contact/', ContactView.as_view(), name='contact'),
 ]
