@@ -96,3 +96,8 @@ class SearchResultsView(ListView):
 
 class AboutView(TemplateView):
     template_name = 'posts/about.html'
+
+
+class ContactView(View):
+    def get(self, request):
+        return render(request, 'posts/contact.html')
