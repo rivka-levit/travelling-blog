@@ -4,7 +4,7 @@ from django.db import models
 class ContactMessage(models.Model):
     sender_name = models.CharField(max_length=50)
     sender_email = models.EmailField()
-    text = models.TextField(max_length=500)
+    text = models.TextField(max_length=500, blank=True)
     processed = models.BooleanField(default=False)
 
     class Meta:
