@@ -43,8 +43,20 @@ class HomeView(View):
 class PostDetailView(View):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
+        try:
+            next_post = Post.objects.filter(created_at__gt=post.created_at).order_by('created_at')[0]
+        except IndexError:
+            next_post = None
+        try:
+            prev_post = Post.objects.filter(created_at__lt=post.created_at).order_by('-created_at')[0]
+        except IndexError:
+            prev_post = None
+        # additional_posts = Post.objects.filter(tags=post.tags.all())
+        # print(additional_posts)
         return render(request, 'posts/post_detail.html', {
-            'post': post
+            'post': post,
+            'next_post': next_post,
+            'prev_post': prev_post
         })
 
 
