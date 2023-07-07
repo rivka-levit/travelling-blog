@@ -36,9 +36,9 @@
 
 
                         <div class="post-tags py-4">
-                            <a href="#">#Health</a>
-                            <a href="#">#Game</a>
-                            <a href="#">#Tour</a>
+                            {% for tag in post.tags.all %}
+                            <a href="#">#{{ tag.name|capfirst }}</a>
+                            {% endfor %}
                         </div>
 
 
