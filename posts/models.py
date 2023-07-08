@@ -38,7 +38,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, related_name='posts')
-    tags = models.ManyToManyField(Tag, null=True, related_name='posts')
+    tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     excerpt = models.CharField(max_length=255, blank=True)
     image = models.ImageField(upload_to='post_photos')
     time_read = models.IntegerField(blank=True, null=True)
