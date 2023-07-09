@@ -1,4 +1,5 @@
 {% extends 'posts/base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -114,7 +115,7 @@
                 <div class="comment-area my-5">
                     <h3 class="mb-4 text-center">2 Comments</h3>
                     <div class="comment-area-box media">
-                        <img alt="" src="images/blog-user-2.jpg" class="img-fluid float-left mr-3 mt-2">
+{#                        <img alt="" src="{% static 'images/blog-user-2.jpg' %}" class="img-fluid float-left mr-3 mt-2">#}
 
                         <div class="media-body ml-4">
                             <h4 class="mb-0">Micle harison </h4>
@@ -132,7 +133,7 @@
                     </div>
 
                     <div class="comment-area-box media mt-5">
-                        <img alt="" src="images/blog-user-3.jpg" class="mt-2 img-fluid float-left mr-3">
+{#                        <img alt="" src="{% static 'images/blog-user-3.jpg' %}" class="mt-2 img-fluid float-left mr-3">#}
 
                         <div class="media-body ml-4">
                             <h4 class="mb-0 ">John Doe </h4>
