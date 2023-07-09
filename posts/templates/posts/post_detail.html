@@ -87,49 +87,29 @@
                 </nav>
                 {% endif %}
 
+                {% if related_posts %}
                 <div class="related-posts-block mt-5">
                     <h3 class="news-title mb-4 text-center">
                         You May Also Like
                     </h3>
                     <div class="row">
+                        {% for p in related_posts %}
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <div class="post-block-wrapper mb-4 mb-lg-0">
-                                <a href="blog-single.html">
-                                    <img class="img-fluid" src="images/fashion/img-1.jpg" alt="post-thumbnail" />
+                                <a href="{% url 'post_detail' p.slug %}">
+                                    <img class="img-fluid" src="{{ p.image.url }}" alt="post-thumbnail" />
                                 </a>
                                 <div class="post-content mt-3">
                                     <h5>
-                                        <a href="blog-single.html">Intel’s new smart glasses actually look good</a>
+                                        <a href="{% url 'post_detail' p.slug %}">{{ p.title|title }}</a>
                                     </h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="post-block-wrapper mb-4 mb-lg-0">
-                                <a href="blog-single.html">
-                                    <img class="img-fluid" src="images/fashion/img-2.jpg" alt="post-thumbnail" />
-                                </a>
-                                <div class="post-content mt-3">
-                                    <h5>
-                                        <a href="blog-single.html">Free Two-Hour Delivery From Whole Foods</a>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="post-block-wrapper">
-                                <a href="blog-single.html">
-                                    <img class="img-fluid" src="images/fashion/img-3.jpg" alt="post-thumbnail" />
-                                </a>
-                                <div class="post-content mt-3">
-                                    <h5>
-                                        <a href="blog-single.html">Snow and Freezing Rain in Paris Forces the</a>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="comment-area my-5">
                     <h3 class="mb-4 text-center">2 Comments</h3>

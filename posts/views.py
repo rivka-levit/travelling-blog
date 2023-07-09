@@ -44,19 +44,33 @@ class PostDetailView(View):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         try:
-            next_post = Post.objects.filter(created_at__gt=post.created_at).order_by('created_at')[0]
+            next_post = Post.objects.filter(created_at__gt=post.created_at).\
+                order_by('created_at')[0]
         except IndexError:
             next_post = None
         try:
-            prev_post = Post.objects.filter(created_at__lt=post.created_at).order_by('-created_at')[0]
+            prev_post = Post.objects.filter(created_at__lt=post.created_at).\
+                order_by('-created_at')[0]
         except IndexError:
             prev_post = None
-        # additional_posts = Post.objects.filter(tags=post.tags.all())
-        # print(additional_posts)
+
+        # Additional posts
+        related_posts = Post.objects.filter(tags__in=post.tags.all()).\
+            exclude(pk=post.id).distinct().order_by('-created_at')
+        if len(related_posts) > 3:
+            related_posts = related_posts[:3]
+        else:
+            add_posts = Post.objects.filter(category=post.category).\
+                exclude(pk=post.id, id__in=related_posts.values_list('id', flat=True)).\
+                order_by('-created_at')[:3-len(related_posts)]
+            related_posts = list(related_posts)
+            related_posts.extend(add_posts)
+
         return render(request, 'posts/post_detail.html', {
             'post': post,
             'next_post': next_post,
-            'prev_post': prev_post
+            'prev_post': prev_post,
+            'related_posts': related_posts
         })
 
 
