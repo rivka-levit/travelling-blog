@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, View, TemplateView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from .models import Post, Category
+from .models import Post, Category, Comment
+from .forms import CommentForm
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
 
@@ -54,7 +55,7 @@ class PostDetailView(View):
         except IndexError:
             prev_post = None
 
-        # Additional posts
+        # Additional posts for the section 'You may also like'
         related_posts = Post.objects.filter(tags__in=post.tags.all()).\
             exclude(pk=post.id).distinct().order_by('-created_at')
         if len(related_posts) > 3:
@@ -66,12 +67,30 @@ class PostDetailView(View):
             related_posts = list(related_posts)
             related_posts.extend(add_posts)
 
+        # Comment form
+        form = CommentForm()
+
         return render(request, 'posts/post_detail.html', {
             'post': post,
             'next_post': next_post,
             'prev_post': prev_post,
-            'related_posts': related_posts
+            'related_posts': related_posts,
+            'form': form
         })
+
+    def post(self, request, slug):
+        form = CommentForm(request.POST)
+        post = Post.objects.get(slug=slug)
+        if form.is_valid():
+            new_comment = Comment(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                text=form.cleaned_data['text'],
+                post=post
+            )
+            new_comment.save()
+
+        return redirect(request.META['HTTP_REFERER'])
 
 
 class CategoryView(ListView):

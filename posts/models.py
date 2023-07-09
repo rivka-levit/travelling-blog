@@ -54,6 +54,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     text = models.TextField(max_length=255)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_moderated = models.BooleanField(default=False)
 
