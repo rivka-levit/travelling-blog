@@ -38,7 +38,7 @@
 
                         <div class="post-tags py-4">
                             {% for tag in post.tags.all %}
-                            <a href="#">#{{ tag.name|capfirst }}</a>
+                            <a href="{% url 'tag_search' tag.name %}">#{{ tag.name|capfirst }}</a>
                             {% endfor %}
                         </div>
 
@@ -160,6 +160,7 @@
 
             </div>
         </div>
+    </div>
     </div>
 </section>
 

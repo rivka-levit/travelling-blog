@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, View, TemplateView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Tag
 from .forms import CommentForm
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
@@ -144,3 +144,23 @@ class SearchResultsView(ListView):
 
 class AboutView(TemplateView):
     template_name = 'posts/about.html'
+
+
+class TagSearchView(ListView):
+    model = Post
+    template_name = 'posts/tag-search.html'
+    context_object_name = 'posts'
+    ordering = ['-created_at']
+    paginate_by = 6
+    paginate_orphans = 1
+
+    def get_queryset(self):
+        tag_name = self.kwargs['tag']
+        tag = Tag.objects.get(name=tag_name)
+        return super(TagSearchView, self).get_queryset().filter(tags=tag)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TagSearchView, self).get_context_data(**kwargs)
+        tag = self.kwargs['tag']
+        context['tag'] = tag
+        return context

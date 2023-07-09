@@ -1,0 +1,57 @@
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="breadcrumb-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="text-center">
+                   <h2 class="lg-title">#{{ tag|capfirst }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section-padding">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+
+            <!-- All found posts list -->
+            {% include 'posts/includes/posts_list.html' %}
+
+            <!-- Pagination block -->
+            {% if is_paginated %}
+                <div class="pagination mt-5 pt-4">
+                    <ul class="list-inline">
+                        {% for page in paginator.page_range %}
+                        <li class="list-inline-item">
+                            <a href="?tag={{ tag }}&page={{ page }}" {% if page == page_obj.number %} class="active" {% endif %}>{{ page }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="list-inline-item">
+                            <a href="?tag={{ tag }}&page={{ page_obj.next_page_number }}" class="prev-posts">
+                                <i class="ti-arrow-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+            <!-- End pagination block -->
+        </div>
+
+        <!-- Sidebar right block -->
+        {% include 'posts/includes/sidebar_right.html' %}
+        <!-- End sidebar right block -->
+
+
+    </div>
+</div>
+</section>
+
+{% endblock %}
