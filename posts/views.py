@@ -70,12 +70,15 @@ class PostDetailView(View):
         # Comment form
         form = CommentForm()
 
+        comments = post.comments.filter(is_moderated=True)
+
         return render(request, 'posts/post_detail.html', {
             'post': post,
             'next_post': next_post,
             'prev_post': prev_post,
             'related_posts': related_posts,
-            'form': form
+            'form': form,
+            'comments': comments
         })
 
     def post(self, request, slug):
