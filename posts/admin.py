@@ -14,8 +14,9 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email')
+    list_display = ('name', 'email', 'post')
     list_filter = ('is_moderated',)
+    list_display_links = ('name', 'email')
 
 
 admin.site.register(Category, CategoryAdmin)
