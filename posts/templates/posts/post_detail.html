@@ -47,7 +47,10 @@
                         <div
                             class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
 
-                            <span class="single-comment-o"><i class="fa fa-comment-o"></i>{{ comments.count }} comments</span>
+                            <span class="single-comment-o">
+                                <i class="fa fa-comment-o"></i>
+                                {{ comments.count }} comment{% if comments.count > 1 %}s{% endif %}
+                            </span>
 
 {#                            <div class="post-share">#}
 {#                                <span class="count-number-like">2</span>#}
@@ -115,7 +118,7 @@
 
                 {% if comments %}
                 <div class="comment-area my-5">
-                    <h3 class="text-center">{{ comments.count }} Comments</h3>
+                    <h3 class="text-center">{{ comments.count }} Comment{% if comments.count > 1 %}s{% endif %}</h3>
                     {% for comment in comments %}
                     <div class="comment-area-box media mt-5">
                         {% gravatar comment.email %}
