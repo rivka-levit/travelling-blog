@@ -1,5 +1,6 @@
 {% extends 'posts/base.html' %}
 {% load static %}
+{% load gravatar %}
 
 {% block content %}
 
@@ -117,17 +118,14 @@
                     <h3 class="text-center">{{ comments.count }} Comments</h3>
                     {% for comment in comments %}
                     <div class="comment-area-box media mt-5">
-                        <img alt="" src="{% static 'images/blog-user-2.jpg' %}" class="img-fluid float-left mr-3 mt-2">
+                        {% gravatar comment.email %}
                         <div class="media-body ml-4">
                             <h4 class="mb-0">{{ comment.name }}</h4>
                             <span class="date-comm font-sm text-capitalize text-color"><i
                                     class="ti-time mr-2"></i>{{ comment.created_at|date }}</span>
 
                             <div class="comment-content mt-3">
-                                <p>{{ comment.text }}</p>
-                            </div>
-                            <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
-                                <a href="#" class="text-underline ">Reply</a>
+                                <p>{{ comment.text|linebreaks }}</p>
                             </div>
                         </div>
                     </div>
