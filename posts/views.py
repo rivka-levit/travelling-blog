@@ -7,6 +7,7 @@ from .forms import CommentForm
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
 from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from decouple import config
 
 
@@ -98,8 +99,7 @@ class PostDetailView(View):
             # Send message to moderator
             to_email = config('MODERATOR_MAIL')
             mail_subject = 'New comment to moderate'
-            message = 'A new comment has been added ' \
-                      'and is waiting to be moderated.'
+            message = render_to_string('posts/moderation.html')
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
 
