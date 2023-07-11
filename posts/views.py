@@ -6,6 +6,8 @@ from .models import Post, Category, Comment, Tag
 from .forms import CommentForm
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
+from django.core.mail import EmailMessage
+from decouple import config
 
 
 class HomeView(View):
@@ -92,6 +94,14 @@ class PostDetailView(View):
                 post=post
             )
             new_comment.save()
+
+            # Send message to moderator
+            to_email = config('MODERATOR_MAIL')
+            mail_subject = 'New comment to moderate'
+            message = 'A new comment has been added ' \
+                      'and is waiting to be moderated.'
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
 
         return redirect(request.META['HTTP_REFERER'])
 
