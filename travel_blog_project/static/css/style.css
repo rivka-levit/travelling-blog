@@ -233,6 +233,10 @@ blockquote {
   text-align: center;
 }
 
+.vh-100 {
+  min-height: 100vh;
+}
+
 /* Button */
 .btn {
   border-radius: 0px;
