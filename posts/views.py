@@ -6,9 +6,14 @@ from .models import Post, Category, Comment, Tag
 from .forms import CommentForm
 from mails.models import Subscriber
 from mails.forms import SubscriberForm
+from decouple import config
+
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
-from decouple import config
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
 
 
 class HomeView(View):
@@ -41,6 +46,20 @@ class HomeView(View):
                 email=form.cleaned_data['email']
             )
             new_subscriber.save()
+
+            # Create confirm email message
+            current_site = get_current_site(request)
+            mail_subject = 'Please, confirm your email'
+            message = render_to_string('mails/confirm_email.html', {
+                'subscriber': new_subscriber,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(new_subscriber.pk))
+            })
+
+            # Send email
+            send_mail = EmailMessage(mail_subject, message, to=[new_subscriber.email])
+            send_mail.send()
+
         return redirect(request.META['HTTP_REFERER'])
 
 
